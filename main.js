@@ -1,8 +1,9 @@
-const { app, BrowserWindow, ipcMain } =  require('electron'); //importando somente alguns modulos do Electron. 
+const { app, BrowserWindow, ipcMain } =  require('electron'); 
+//importando somente alguns modulos do Electron. 
 //app: Este é responsável por controlar o ciclo de vida da aplicação desktop.
 //BrowserWindow: Responsável por criar janelas.
 //IPCMain "escuta" o canal de comunicação que veio do IPCRenderer
-
+const data = require('./data.js');
 app.on('ready', () => {
     console.log('Aplicação Iniciada');
     let mainWindow = new BrowserWindow({
@@ -37,4 +38,8 @@ ipcMain.on('abrir-janela-sobre', () => {
 
 ipcMain.on('fechar-janela-sobre', () => {
     sobreWindow.close();
+});
+
+ipcMain.on('curso-parado', (event,curso, tempoEstudado) => {
+    data.salvaDados(curso, tempoEstudado);
 });
